@@ -84,6 +84,12 @@ apply_job: &apply_job
           cd /opt/AWSCyberRange
           make destroy-force
         when: always
+
+    - slack/status:
+              channel: cicd
+              mentions: 'cappetta'
+              webhook: '${SLACK_WEBHOOK}'
+
     - slack/notify:
             message: "CICD Pipeline build has completed the final pipeline test, review the results" # Optional: Enter your own message
             mentions: "cappetta" # Optional: Enter the Slack IDs of any user or group (sub_team) to be mentioned

@@ -59,9 +59,6 @@ apply_job: &apply_job
   steps:
     - slack/notify:
               channel: cicd
-              color: '#42e2f4'
-              message: A $CIRCLE_JOB job has started the for the Cyber Range\n\n Compare URL -> $CIRCLE_COMPARE_URL
-              webhook: '${SLACK_WEBHOOK}'
     - *restore_repo
     - *set_terraform_environment
     - *terraform_init
@@ -88,7 +85,6 @@ apply_job: &apply_job
     - slack/status:
               channel: cicd
               mentions: 'cappetta'
-              webhook: '${SLACK_WEBHOOK}'
 
     - slack/notify:
             message: "CICD Pipeline build has completed the final pipeline test, review the results" # Optional: Enter your own message
@@ -102,9 +98,6 @@ jobs:
     steps:
       - slack/notify:
                 channel: cicd
-                color: '#42e2f4'
-                message: A $CIRCLE_JOB job has started the for the Cyber Range\n\n Compare URL -> $CIRCLE_COMPARE_URL
-                webhook: '${SLACK_WEBHOOK}'
       - checkout
       - *set_terraform_environment
       - run:
@@ -142,9 +135,12 @@ jobs:
     steps:
       - slack/notify:
                 channel: cicd
-                color: '#42e2f4'
-                message: A $CIRCLE_JOB job has started the for the Cyber Range\n\n Compare URL -> $CIRCLE_COMPARE_URL
-                webhook: '${SLACK_WEBHOOK}'
+                event: pass
+                template: success_tagged_deploy_1  
+      - slack/notify:
+                channel: cicd
+                event: fail
+                template: basic_fail_1  
       - *restore_repo
       - *set_terraform_environment
       - *terraform_init

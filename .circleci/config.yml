@@ -82,14 +82,9 @@ apply_job: &apply_job
           make destroy-force
         when: always
 
-    - slack/status:
+    - slack/notify:
               channel: cicd
               mentions: 'cappetta'
-
-    - slack/notify:
-            message: "CICD Pipeline build has completed the final pipeline test, review the results" # Optional: Enter your own message
-            mentions: "cappetta" # Optional: Enter the Slack IDs of any user or group (sub_team) to be mentioned
-            color: "#42e2f4" # Optional: Assign custom colors for each notification
 
 jobs:
 

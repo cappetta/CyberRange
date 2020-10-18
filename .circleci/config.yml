@@ -57,8 +57,6 @@ terraform_init: &terraform_init
 apply_job: &apply_job
   <<: *default_config
   steps:
-    - slack/notify:
-              channel: cicd
     - *restore_repo
     - *set_terraform_environment
     - *terraform_init
@@ -82,17 +80,11 @@ apply_job: &apply_job
           make destroy-force
         when: always
 
-    - slack/notify:
-              channel: cicd
-              mentions: 'cappetta'
-
 jobs:
 
   build:
     <<: *default_config
     steps:
-      - slack/notify:
-                channel: cicd
       - checkout
       - *set_terraform_environment
       - run:
